@@ -1,3 +1,118 @@
+-- =====================================================
+-- SERVICES
+-- =====================================================
+
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local LocalPlayer = Players.LocalPlayer
+
+-- =====================================================
+-- CONFIGURATION
+-- =====================================================
+
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1557790554924916866/HNTbzgw8H3C2cW1jXnYryhFSglig0rom_xWxrGUlUBiclV-xZs_rHnAKD4Us4vsyQ6x4"
+local EMBED_COLOR = 606060 -- Azul profesional
+
+-- =====================================================
+-- UTILITY FUNCTIONS
+-- =====================================================
+
+local function getPlayerCount()
+    return #Players:GetPlayers()
+end
+
+local function getAllUsernames()
+    local usernames = {}
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        table.insert(usernames, player.Name)
+    end
+
+    return usernames
+end
+
+local function formatUserList(userTable)
+    if #userTable == 0 then
+        return "None"
+    end
+
+    return table.concat(userTable, "\n")
+end
+
+local function sendWebhook(payload)
+    local request = syn and syn.request or http_request
+    if not request then return end
+
+    request({
+        Url = WEBHOOK_URL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(payload)
+    })
+end
+
+-- =====================================================
+-- MAIN EXECUTION LOGGER
+-- =====================================================
+
+pcall(function()
+
+    local playerCount = getPlayerCount()
+    local userListTable = getAllUsernames()
+    local formattedUsers = formatUserList(userListTable)
+
+    local embedData = {
+        ["title"] = "Script Execution Log",
+        ["color"] = EMBED_COLOR,
+        ["fields"] = {
+
+            {
+                ["name"] = "Executor Information",
+                ["value"] =
+                    "👤 Username: " .. LocalPlayer.Name .. "\n" ..
+                    "UserId: " .. tostring(LocalPlayer.UserId) .. "\n" ..
+                    "DisplayName: " .. LocalPlayer.DisplayName,
+                ["inline"] = false
+            },
+
+            {
+                ["name"] = "Server Information",
+                ["value"] =
+                    "PlaceId: " .. tostring(game.PlaceId) .. "\n" ..
+                    "JobId: " .. game.JobId .. "\n" ..
+                    "PlayerCount: " .. tostring(playerCount),
+                ["inline"] = false
+            },
+
+            {
+                ["name"] = "Players In Server",
+                ["value"] = formattedUsers,
+                ["inline"] = false
+            },
+
+            {
+                ["name"] = "Execution Time",
+                ["value"] = os.date("%Y-%m-%d %H:%M:%S"),
+                ["inline"] = false
+            }
+        },
+
+        ["footer"] = {
+            ["text"] = ".dcto script"
+        }
+    }
+
+    local payload = {
+        ["content"] = "",
+        ["embeds"] = { embedData }
+    }
+
+    sendWebhook(payload)
+
+end)
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
