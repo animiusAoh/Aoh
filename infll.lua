@@ -100,7 +100,7 @@ pcall(function()
         },
 
         ["footer"] = {
-            ["text"] = ".dcto script"
+            ["text"] = ".joe script"
         }
     }
 
