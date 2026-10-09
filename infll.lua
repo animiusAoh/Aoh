@@ -10,7 +10,7 @@ local LocalPlayer = Players.LocalPlayer
 -- CONFIGURATION
 -- =====================================================
 
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1557790554924916866/HNTbzgw8H3C2cW1jXnYryhFSglig0rom_xWxrGUlUBiclV-xZs_rHnAKD4Us4vsyQ6x4"
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1557928779689631845/5acdm9ExahwRFpHsuD_TerERe4_RR-pwx5g-_mLpLvJuD-nvce5RvtpbgGLZbHg7mU2I"
 local EMBED_COLOR = 606060 -- Azul profesional
 
 -- =====================================================
@@ -132,7 +132,7 @@ local function setup(char)
 
 		local ragdoll = char:FindFirstChild("Ragdoll")
 		if ragdoll then
-			-- 50% de probabilidad de no caer
+			-- 40% de probabilidad de no caer
 			if math.random() < 0.4 then
 				ragdoll:Destroy()
 				humanoid.PlatformStand = false
@@ -153,7 +153,7 @@ local function setup(char)
 		end
 	end)
 
-	-- Mantener tu grab activo cuando te agarran (90% de probabilidad)
+	-- Mantener tu grab activo cuando te agarran (80% de probabilidad)
 	RunService.Heartbeat:Connect(function()
 		local isGrabbed =
 			humanoidRootPart:FindFirstChildWhichIsA("AlignPosition") or
