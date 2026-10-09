@@ -132,7 +132,7 @@ local function setup(char)
 
 		local ragdoll = char:FindFirstChild("Ragdoll")
 		if ragdoll then
-			-- 40% de probabilidad de no caer
+			-- 50% de probabilidad de no caer
 			if math.random() < 0.4 then
 				ragdoll:Destroy()
 				humanoid.PlatformStand = false
@@ -153,7 +153,7 @@ local function setup(char)
 		end
 	end)
 
-	-- Mantener tu grab activo cuando te agarran (80% de probabilidad)
+	-- Mantener tu grab activo cuando te agarran (90% de probabilidad)
 	RunService.Heartbeat:Connect(function()
 		local isGrabbed =
 			humanoidRootPart:FindFirstChildWhichIsA("AlignPosition") or
